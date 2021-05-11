@@ -1,22 +1,25 @@
 import React, { Component } from "react";
-import FriendCard from "./components/FriendCard";
+import Table from "./components/Table";
 import Wrapper from "./components/Wrapper";
 import Title from "./components/Title";
 import API from "./utils/API";
+import SearchBox from "./components/SearchBox";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.sortByFirstName = this.sortByFirstName.bind(this)
     this.sortByLastName = this.sortByLastName.bind(this)
+    this.handleSearchChange = this.handleSearchChange(this)
   }
-  // Setting this.state.friends to the friends json array
+
   state = {
-    users: []
+    users: [],
+    keyword: ""
   };
 
 
-  componentDidMount(){
+  componentDidMount() {
     API.getUsers().then((results) => {
       console.log(results);
 
@@ -32,21 +35,21 @@ class App extends Component {
 
     const userList = this.state.users
 
-    userList.sort(function(user1, user2) {
+    userList.sort(function (user1, user2) {
       if (user1.name.first < user2.name.first) {
         return -1;
       }
       if (user1.name.first > user2.name.first) {
         return 1;
       }
-    
+
       // names must be equal
       return 0;
-      });
+    });
 
-      this.setState({
-        users: userList
-      })
+    this.setState({
+      users: userList
+    })
 
   }
 
@@ -54,32 +57,48 @@ class App extends Component {
 
     const userList = this.state.users
 
-    userList.sort(function(user1, user2) {
+    userList.sort(function (user1, user2) {
       if (user1.name.last < user2.name.last) {
         return -1;
       }
       if (user1.name.last > user2.name.last) {
         return 1;
       }
-    
+
       // names must be equal
       return 0;
-      });
+    });
 
-      this.setState({
-        users: userList
-      })
+    this.setState({
+      users: userList
+    })
 
   }
 
 
-  // Map over this.state.friends and render a FriendCard component for each friend object
+  handleSearchChange(event) {
+    this.setState({ keyword: event.target.value})
+  }
+
+  filtered() {
+    const keyword = this.state.keyword.toLowerCase();
+    return this.state.users.filter( user => {
+      return (
+        user.first.toLowerCase().includes(keyword) || user.last.toLowerCase().includes(keyword)
+      )
+    })
+  }
+
   render() {
     return (
       <Wrapper>
-        <Title></Title>
-        
-      <FriendCard users = {this.state.users} sortFirst = {this.sortByFirstName} sortLast = {this.sortByLastName}/>
+
+        <Title />
+
+        <SearchBox onChange={this.handleSearchChange}/>
+
+        <Table users={this.state.users} sortFirst={this.sortByFirstName} sortLast={this.sortByLastName} />
+
       </Wrapper>
     );
   }

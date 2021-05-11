@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 
-function FriendCard(props) {
+function Table(props) {
   return (
     <table class="table table-striped">
   <thead>
@@ -17,7 +17,7 @@ function FriendCard(props) {
   <tbody>
     {props.users.map((user, index) => (
           <tr>
-          <td><img src = {user.picture.thumbnail}></img></td>
+          <td><img alt = "User Thumbnail" src = {user.picture.thumbnail}></img></td>
           <th scope="row">{index + 1}</th>
           <td>{user.name.first}</td>
           <td>{user.name.last}</td>
@@ -30,4 +30,4 @@ function FriendCard(props) {
   );
 }
 
-export default FriendCard;
+export default Table;
