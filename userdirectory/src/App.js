@@ -15,6 +15,7 @@ class App extends Component {
 
   state = {
     users: [],
+    displayedUsers: [],
     keyword: ""
   };
 
@@ -26,14 +27,15 @@ class App extends Component {
       const userList = results.data.results;
 
       this.setState({
-        users: userList
+        users: userList,
+        displayedUsers: userList
       })
     });
   }
 
   sortByFirstName() {
 
-    const userList = this.state.users
+    const userList = this.state.displayedUsers
 
     userList.sort(function (user1, user2) {
       if (user1.name.first < user2.name.first) {
@@ -48,14 +50,14 @@ class App extends Component {
     });
 
     this.setState({
-      users: userList
+      displayedUsers: userList
     })
 
   }
 
   sortByLastName() {
 
-    const userList = this.state.users
+    const userList = this.state.displayedUsers
 
     userList.sort(function (user1, user2) {
       if (user1.name.last < user2.name.last) {
@@ -70,7 +72,7 @@ class App extends Component {
     });
 
     this.setState({
-      users: userList
+      displayedUsers: userList
     })
 
   }
@@ -78,9 +80,12 @@ class App extends Component {
 
   handleSearchChange(event) {
     this.setState({ keyword: event.target.value})
+    let filteredList = filter();
+
+    this.setState({ displayedUsers: filteredList});
   }
 
-  filtered() {
+  filter() {
     const keyword = this.state.keyword.toLowerCase();
     return this.state.users.filter( user => {
       return (
@@ -97,7 +102,7 @@ class App extends Component {
 
         <SearchBox onChange={this.handleSearchChange}/>
 
-        <Table users={this.state.users} sortFirst={this.sortByFirstName} sortLast={this.sortByLastName} />
+        <Table users={this.state.displayedUsers} sortFirst={this.sortByFirstName} sortLast={this.sortByLastName} />
 
       </Wrapper>
     );
