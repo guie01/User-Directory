@@ -10,7 +10,8 @@ class App extends Component {
     super(props);
     this.sortByFirstName = this.sortByFirstName.bind(this)
     this.sortByLastName = this.sortByLastName.bind(this)
-    this.handleSearchChange = this.handleSearchChange(this)
+    this.handleSearchChange = this.handleSearchChange.bind(this)
+    this.filter = this.filter.bind(this)
   }
 
   state = {
@@ -80,7 +81,8 @@ class App extends Component {
 
   handleSearchChange(event) {
     this.setState({ keyword: event.target.value})
-    let filteredList = filter();
+
+    let filteredList = this.filter();
 
     this.setState({ displayedUsers: filteredList});
   }
@@ -89,7 +91,7 @@ class App extends Component {
     const keyword = this.state.keyword.toLowerCase();
     return this.state.users.filter( user => {
       return (
-        user.first.toLowerCase().includes(keyword) || user.last.toLowerCase().includes(keyword)
+        user.name.first.toLowerCase().includes(keyword) || user.name.last.toLowerCase().includes(keyword)
       )
     })
   }
