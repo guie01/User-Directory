@@ -13,7 +13,7 @@
   <a name="application"></a>
   ## Application Description.
   
-  An employee/user directory web application to track non-sensitive data. The web app is capable of sorting first and last name alphabetically, and users/managers can search specific employees by name in the search bar.
+  An employee/user directory web application to track non-sensitive data. The web app is capable of sorting first and last name alphabetically, and users/managers can search specific employees by name in the search bar. Please see the deployed app at https://secure-crag-21869.herokuapp.com/
   <a name="installation"></a>
   ## Installation.
   
